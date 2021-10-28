@@ -186,8 +186,8 @@ class KeyWatch {
                 }
                 this.#keyPath.push(key);
             } else key = this.#downKeys.join('+');
-            if (preventDefault) e.preventDefault();
-            if (this.#trigger(this.#checkCombinationKey(key), new KeyboardEvent(this.#downKeys.length > 1 ? 'shortcutkey' : 'keydown', {
+            const combination = this.#checkCombinationKey(key);
+            if (this.#trigger(combination, new KeyboardEvent(this.#downKeys.length > 1 ? 'shortcutkey' : 'keydown', {
                 ...e,
                 key: this.#downKeys.map(item => keyMapReverse[item]).join('+'),
                 code: key,
@@ -196,7 +196,7 @@ class KeyWatch {
                 altKey: false,
                 metaKey: false,
                 view: e.view,
-            }))) e.preventDefault();
+            })) || (combination && preventDefault)) e.preventDefault();
             const {
                 has,
                 idList,
@@ -210,7 +210,7 @@ class KeyWatch {
                 altKey: false,
                 metaKey: false,
                 view: e.view,
-            }))) e.preventDefault();
+            })) || (idList && preventDefault)) e.preventDefault();
         });
         this.#target.addEventListener('keyup', e => {
             if (this.isGlobal && this.isFocusInput) return;
