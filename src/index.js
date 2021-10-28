@@ -162,7 +162,12 @@ function getUUID() {
 // 按键观察
 class KeyWatch {
 
-    constructor(target) {
+    /**
+     * 
+     * @param {HTMLElement/Window} target [监听目标] 
+     * @param {Boolean} preventDefault [阻止浏览器默认行为]
+     */
+    constructor(target, preventDefault = false) {
         this.#target = target && target instanceof HTMLElement && ['INPUT', 'TEXTAREA'].includes(target.nodeName) ? target : window;
         this.#target.addEventListener('keydown', e => {
             if (this.isGlobal && this.isFocusInput) return;
@@ -181,6 +186,7 @@ class KeyWatch {
                 }
                 this.#keyPath.push(key);
             } else key = this.#downKeys.join('+');
+            if (preventDefault) e.preventDefault();
             if (this.#trigger(this.#checkCombinationKey(key), new KeyboardEvent(this.#downKeys.length > 1 ? 'shortcutkey' : 'keydown', {
                 ...e,
                 key: this.#downKeys.map(item => keyMapReverse[item]).join('+'),

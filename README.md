@@ -21,6 +21,9 @@ const removeListen = watch.listen('ctrl+c', () => {
 // 移除
 removeListen();
 
+// 全局阻止默认行为
+const watch = new KeyWatch(unll, true);
+
 /**
  * 组合键
  * 先按下 ctrl+k，再按下 ctrl+u
