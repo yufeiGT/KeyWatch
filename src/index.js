@@ -1,163 +1,12 @@
-const keyMap = {
-    'esc': 'Escape',
-    'f1': 'F1',
-    'f2': 'F2',
-    'f3': 'F3',
-    'f4': 'F4',
-    'f5': 'F5',
-    'f6': 'F6',
-    'f7': 'F7',
-    'f8': 'F8',
-    'f9': 'F9',
-    'f10': 'F10',
-    'f11': 'F11',
-    'f12': 'F12',
-    'scrolllock': 'ScrollLock',
-    'printscreen': 'PrintScreen',
-    '`': 'Backquote',
-    '1': ['Digit1', 'Numpad1'],
-    '2': ['Digit2', 'Numpad2'],
-    '3': ['Digit3', 'Numpad3'],
-    '4': ['Digit4', 'Numpad4'],
-    '5': ['Digit5', 'Numpad5'],
-    '6': ['Digit6', 'Numpad6'],
-    '7': ['Digit7', 'Numpad7'],
-    '8': ['Digit8', 'Numpad8'],
-    '9': ['Digit9', 'Numpad9'],
-    '0': ['Digit0', 'Numpad0'],
-    'digit1': 'Digit1',
-    'digit2': 'Digit2',
-    'digit3': 'Digit3',
-    'digit4': 'Digit4',
-    'digit5': 'Digit5',
-    'digit6': 'Digit6',
-    'digit7': 'Digit7',
-    'digit8': 'Digit8',
-    'digit9': 'Digit9',
-    'digit0': 'Digit0',
-    '-': ['Minus', 'NumpadSubtract'],
-    '=': 'Equal',
-    'backspace': 'Backspace',
-    'tab': 'Tab',
-    'capslock': 'CapsLock',
-    'shift': ['ShiftLeft', 'ShiftRight'],
-    'ctrl': ['ControlLeft', 'ControlRight'],
-    'meta': ['MetaLeft', 'MetaRight'],
-    'alt': ['AltLeft', 'AltRight'],
-    'space': 'Space',
-    'contextmenu': 'ContextMenu',
-    'enter': ['Enter', 'NumpadEnter'],
-    'a': 'KeyA',
-    'b': 'KeyB',
-    'c': 'KeyC',
-    'd': 'KeyD',
-    'e': 'KeyE',
-    'f': 'KeyF',
-    'g': 'KeyG',
-    'h': 'KeyH',
-    'i': 'KeyI',
-    'j': 'KeyJ',
-    'k': 'KeyK',
-    'l': 'KeyL',
-    'm': 'KeyM',
-    'n': 'KeyN',
-    'o': 'KeyO',
-    'p': 'KeyP',
-    'q': 'KeyQ',
-    'r': 'KeyR',
-    's': 'KeyS',
-    't': 'KeyT',
-    'u': 'KeyU',
-    'v': 'KeyV',
-    'w': 'KeyW',
-    'x': 'KeyX',
-    'y': 'KeyY',
-    'z': 'KeyZ',
-    '[': 'BracketLeft',
-    ']': 'BracketRight',
-    '\\': 'Backslash',
-    ';': 'Semicolon',
-    '\'': 'Quote',
-    ',': 'Comma',
-    '.': ['Period', 'NumpadDecimal'],
-    '/': ['Slash', 'NumpadDivide'],
-    'up': 'ArrowUp',
-    'right': 'ArrowRight',
-    'down': 'ArrowDown',
-    'left': 'ArrowLeft',
-    '↑': 'ArrowUp',
-    '→': 'ArrowRight',
-    '↓': 'ArrowDown',
-    '←': 'ArrowLeft',
-    'pause': 'Pause',
-    'insert': 'Insert',
-    'home': 'Home',
-    'end': 'End',
-    'delete': 'Delete',
-    'pageup': 'PageUp',
-    'pagedown': 'PageDown',
-    'numlock': 'NumLock',
-    'numpaddivide': 'NumpadDivide',
-    '*': 'NumpadMultiply',
-    'numpadmultiply': 'NumpadMultiply',
-    'numpadsubtract': 'NumpadSubtract',
-    '+': 'NumpadAdd',
-    'numpadadd': 'NumpadAdd',
-    'numpadenter': 'NumpadEnter',
-    'numpaddecimal': 'NumpadDecimal',
-    'numpad1': 'Numpad1',
-    'numpad2': 'Numpad2',
-    'numpad3': 'Numpad3',
-    'numpad4': 'Numpad4',
-    'numpad5': 'Numpad5',
-    'numpad6': 'Numpad6',
-    'numpad7': 'Numpad7',
-    'numpad8': 'Numpad8',
-    'numpad9': 'Numpad9',
-    'numpad0': 'Numpad0',
-};
+import Spanner from '@~crazy/spanner';
 
-const keyMapReverse = {};
-for (let [key, v] of Object.entries(keyMap)) {
-    const value = Array.isArray(v) ? v : [v];
-    value.forEach(item => {
-        if (item in keyMapReverse) {
-            if (Array.isArray(keyMapReverse[item])) {
-                keyMapReverse[item] = [...keyMapReverse[item], key];
-            } else keyMapReverse[item] = [keyMapReverse[item], key];
-            return;
-        }
-        keyMapReverse[item] = key;
-    });
-}
-
-const keyIndex = {
-    'ctrl': 4,
-    'ControlLeft': 4,
-    'ControlRight': 4,
-    'shift': 3,
-    'ShiftLeft': 3,
-    'ShiftRight': 3,
-    'alt': 2,
-    'MetaLeft': 2,
-    'MetaRight': 2,
-    'meta': 1,
-    'MetaLeft': 1,
-    'MetaRight': 1,
-};
-
-function isObject(obj) {
-    return typeof obj == 'object' && !Array.isArray(obj) && obj !== null;
-}
-
-function getUUID() {
-    let d = new Date().getTime() + performance.now();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, $1 => {
-        const r = (d + Math.random() * 16) % 16 | 0;
-        d = Math.floor(d / 16);
-        return ($1 == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-}
+import {
+    keyMap,
+    codeMap,
+    keyIndex,
+    toKey,
+    toCode,
+} from './keyMap';
 
 // 按键观察
 class KeyWatch {
@@ -189,7 +38,7 @@ class KeyWatch {
             const combination = this.#checkCombinationKey(key);
             if (this.#trigger(combination, new KeyboardEvent(this.#downKeys.length > 1 ? 'shortcutkey' : 'keydown', {
                 ...e,
-                key: this.#downKeys.map(item => keyMapReverse[item]).join('+'),
+                key: this.#downKeys.map(item => codeMap[item]).join('+'),
                 code: key,
                 ctrlKey: false,
                 shiftKey: false,
@@ -203,7 +52,7 @@ class KeyWatch {
             } = this.#checkKeyPath(this.#keyPath);
             if ((has && !idList) || this.#trigger(idList, new KeyboardEvent('combinationkey', {
                 ...e,
-                key: this.#keyPath.map(item => item.split(/\+/).map(item => keyMapReverse[item]).join('+')).join('>'),
+                key: this.#keyPath.map(item => item.split(/\+/).map(item => codeMap[item]).join('+')).join('>'),
                 code: this.#keyPath.join('>'),
                 ctrlKey: false,
                 shiftKey: false,
@@ -235,7 +84,7 @@ class KeyWatch {
     // 按键路径地图
     #keyPathMap = {};
 
-    #id = getUUID();
+    #id = Spanner.createID();
     get id() {
         return this.#id;
     }
@@ -292,7 +141,7 @@ class KeyWatch {
             callback = c;
         } else callback = params[0];
         if (typeof callback !== 'function') return;
-        const id = getUUID();
+        const id = Spanner.createID();
         const paths = key.map(item => {
             const path = KeyWatch.buildKeyPath(item, id);
             this.#appendKeyPath(path);
@@ -306,7 +155,7 @@ class KeyWatch {
     }
 
     #appendKeyPath(path, scope = this.#keyPathMap) {
-        if (!isObject(path)) {
+        if (!Spanner.isObject(path)) {
             if (!('defaults' in scope)) scope.defaults = [];
             scope.defaults.push(path);
             return;
@@ -318,7 +167,7 @@ class KeyWatch {
     }
 
     #removePath(path, scope = this.#keyPathMap) {
-        if (!isObject(path)) {
+        if (!Spanner.isObject(path)) {
             if (!('defaults' in scope)) return;
             const index = scope.defaults.indexOf(path);
             if (index > -1) scope.defaults.splice(index, 1);
@@ -391,6 +240,11 @@ class KeyWatch {
     static getKeyIndex(key) {
         return keyIndex[key] || 0;
     }
+
+    
+    static toKey = toKey;
+
+    static toCode = toCode;
 
 }
 
