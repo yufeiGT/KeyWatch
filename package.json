@@ -1,6 +1,6 @@
 {
 	"name": "@~crazy/keywatch",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"description": "按键观察",
 	"main": "dist/keywatch.js",
 	"scripts": {
